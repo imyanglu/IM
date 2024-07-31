@@ -30,7 +30,7 @@ const AvatarPicker = ({ avatar, children, avatars, onAVatarChange }: AvatarPicke
         }}>
         {children}
       </Pressable>
-      <Modal visible transparent>
+      <Modal visible={show} transparent>
         <View className="absolute top-[250px]  w-full flex-row flex-wrap justify-center  z-10 px-[20px]">
           <View
             className="w-full flex-row flex-wrap justify-center bg-[#fff] py-[16px] rounded-[24px]"

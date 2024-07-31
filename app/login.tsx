@@ -17,7 +17,7 @@ const EmailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const Login = () => {
   const router = useRouter();
   const { top } = useSafeAreaInsets();
-  const [_, changeMe] = useContext(MeContext);
+  const [me, changeMe] = useContext(MeContext);
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [isTimeDown, setIsTimeDown] = useState(false);
