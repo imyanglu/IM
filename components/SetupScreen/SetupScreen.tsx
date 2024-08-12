@@ -53,6 +53,7 @@ const SetupScreen = () => {
     setup(user)
       .then((data) => {
         changeMe(data.user);
+        router.replace('/');
       })
       .catch((e) => {
         if (e instanceof ApiError) {

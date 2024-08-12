@@ -17,7 +17,9 @@ export default function HomeScreen() {
       <PageBg />
       <View className="h-[50px] px-[12px] flex-row items-center">
         <View className=" absolute left-[12px] flex-row">
-          <Image source={{ uri: me.avatar }} className="w-[40px] h-[40px] rounded-[20px]" />
+          {me.avatar && (
+            <Image source={{ uri: me.avatar }} className="w-[40px] h-[40px] rounded-[20px]" />
+          )}
         </View>
         <Text className="flex-1 text-center text-[16px] font-bold">聊天列表</Text>
         <AddFriendModal containerClassName="absolute right-[16px] w-[20px] h-[20px] ">

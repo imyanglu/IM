@@ -55,6 +55,7 @@ const Login = () => {
       }
       changeMe(data.user);
     } catch (e) {
+      console.log(e);
       if (e instanceof ApiError) {
         Toast.show({
           type: 'error',

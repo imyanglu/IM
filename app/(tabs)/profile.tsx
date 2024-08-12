@@ -12,10 +12,12 @@ const Profile = () => {
     <View className="flex-1 bg-[#fff] px-[16px] relative" style={{ paddingTop: top }}>
       <PageBg />
       <View>
-        <Image
-          source={{ uri: me.avatar }}
-          className="w-[80px] h-[80px] rounded-[40px] bg-slate-400"
-        />
+        {me.avatar && (
+          <Image
+            source={{ uri: me.avatar }}
+            className="w-[80px] h-[80px] rounded-[40px] bg-slate-400"
+          />
+        )}
       </View>
     </View>
   );
