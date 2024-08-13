@@ -3,7 +3,6 @@ import { MeContext } from '@/Contexts/MeContext';
 import { Storage } from '@/utils/storage';
 import { SplashScreen, useRouter } from 'expo-router';
 import { ReactNode, useContext, useEffect } from 'react';
-import { View } from 'react-native';
 
 const RootView = ({ children }: { children: ReactNode }) => {
   const [_, changeMe] = useContext(MeContext);
@@ -12,7 +11,7 @@ const RootView = ({ children }: { children: ReactNode }) => {
     try {
       const me = await Storage.get('me');
       if (!me) {
-        router.push('/login');
+        router.replace('/login');
         return;
       }
       changeMe(me);

@@ -11,6 +11,7 @@ import { queryAvatars, setup } from '@/api';
 import { ApiError } from '@/api/instance';
 import Toast from 'react-native-toast-message';
 import { MeContext } from '@/Contexts/MeContext';
+import { Storage } from '@/utils/storage';
 
 export type SetupUser = {
   avatar: string;
@@ -52,6 +53,7 @@ const SetupScreen = () => {
   const submit = async () => {
     setup(user)
       .then((data) => {
+        Storage.save('me', data.user);
         changeMe(data.user);
         router.replace('/');
       })

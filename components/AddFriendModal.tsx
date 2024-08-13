@@ -1,10 +1,6 @@
 import { useRef, useState } from 'react';
-import { Modal, Pressable, View, Text } from 'react-native';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
-import { useRouter } from 'expo-router';
+import { Pressable, View, Text } from 'react-native';
+
 import AddChatModal from './AddChatModal';
 
 type AddFriendModal = {
@@ -12,29 +8,20 @@ type AddFriendModal = {
   containerClassName?: string;
 };
 
-const Links = [
-  {
-    key: 'scan',
-    label: '扫一扫',
-    icon: <Ionicons name="qr-code-sharp" size={20} color="#fff" />,
-  },
-  { key: 'addChat', label: '发起聊天', icon: <AntDesign name="adduser" size={20} color="#fff" /> },
-  {
-    key: 'search',
-    label: '搜索用户',
-    icon: <MaterialIcons name="person-search" size={20} color="#fff" />,
-  },
-];
-
 const AddFriendModal = ({ children, containerClassName }: AddFriendModal) => {
   const btnRef = useRef<View>(null);
-  const router = useRouter();
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0, w: 0, h: 0 });
 
   const selected = (k: string) => {
+    console.log(k);
+    setShowModal(false);
     switch (k) {
-      case 'addChar':
+      case 'scan':
+        break;
+      case 'addCha':
+        break;
+      case 'search':
         break;
     }
   };
@@ -54,7 +41,12 @@ const AddFriendModal = ({ children, containerClassName }: AddFriendModal) => {
         className={`relative ${containerClassName} `}>
         {children}
       </Pressable>
-      <AddChatModal visible={showModal} position={position} onClose={() => setShowModal(false)} />
+      <AddChatModal
+        visible={showModal}
+        position={position}
+        onClose={() => setShowModal(false)}
+        onSelect={selected}
+      />
     </>
   );
 };

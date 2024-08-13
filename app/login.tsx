@@ -5,6 +5,7 @@ import CountdownTimer from '@/components/CountdownTimer';
 import PageBg from '@/components/PageBg';
 import { MeContext } from '@/Contexts/MeContext';
 import { User } from '@/type';
+import { Storage } from '@/utils/storage';
 import { useRouter } from 'expo-router';
 import { setItemAsync } from 'expo-secure-store';
 import { useContext, useState } from 'react';
@@ -44,16 +45,19 @@ const Login = () => {
 
   const verify = async () => {
     if (!code || !email) return;
+
     try {
       const data = await verifyEmailCode<{ token: string; user: User }>({ email, code });
       if (data.token) setItemAsync('token', data.token);
       if (!data.user.isSetup) {
-        console.log(data.user, 'iii');
         changeMe({ email: data.user.email, id: data.user.id });
         router.push({ pathname: '/setup', params: { email: data.user.email } });
         return;
       }
-      changeMe(data.user);
+      const me = data.user;
+      Storage.save('me', me);
+      changeMe(me);
+      router.replace('/');
     } catch (e) {
       console.log(e);
       if (e instanceof ApiError) {
@@ -71,7 +75,7 @@ const Login = () => {
   return (
     <View className="flex-1 px-[20px] bg-[#fff] relative " style={{ paddingTop: top }}>
       <PageBg />
-      <Text className="font-bold text-[32px] mt-[32px] ">登录/注册</Text>
+      <Text className="font-bold text-[23px] mt-[32px] ">登录/注册</Text>
       <Image
         className="w-[80px] h-[80px] mx-auto rounded-[40px] mt-[40px]"
         source={require('@/assets/images/icon.png')}
