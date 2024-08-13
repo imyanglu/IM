@@ -19,3 +19,7 @@ export const setup = (data: { bio: string; avatar: string; nickname: string; age
 export const getMe = () => {
   return get<{ user: User }>('/me');
 };
+
+export const queryUser = (k: string) => {
+  return get<{ users: User[] }>('/search', { keyword: k });
+};

@@ -36,7 +36,7 @@ const AddChatModal = ({ visible, position, onClose, onSelect }: AddChatModal) =>
   useEffect(() => {
     opacity.value = withTiming(visible ? 1 : 0);
   }, [visible]);
-  console.log(visible);
+
   return (
     <Modal visible={visible} onBgClick={onClose}>
       <Animated.View

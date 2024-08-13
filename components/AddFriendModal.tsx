@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { Pressable, View, Text } from 'react-native';
 
 import AddChatModal from './AddChatModal';
+import { router } from 'expo-router';
 
 type AddFriendModal = {
   children: React.ReactNode;
@@ -13,13 +14,16 @@ const AddFriendModal = ({ children, containerClassName }: AddFriendModal) => {
   const [showModal, setShowModal] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0, w: 0, h: 0 });
 
+  const addChat = () => {
+    router.push('/chat/search');
+  };
   const selected = (k: string) => {
-    console.log(k);
     setShowModal(false);
     switch (k) {
       case 'scan':
         break;
-      case 'addCha':
+      case 'addChat':
+        addChat();
         break;
       case 'search':
         break;
