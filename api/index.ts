@@ -23,3 +23,6 @@ export const getMe = () => {
 export const queryUser = (k: string) => {
   return get<{ users: User[] }>('/search', { keyword: k });
 };
+export const addFriendToList = (id: string, v: string) => {
+  return get('/addUser', { id, note: v });
+};
