@@ -13,3 +13,10 @@ export type User = {
   gender: number;
   isSetup: boolean;
 };
+
+export type UserOverview = {
+  avatar: string;
+  id: string;
+  bio: string;
+  nickname: string;
+};

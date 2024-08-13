@@ -1,5 +1,6 @@
 import { User } from '@/type';
 import { get, post } from './instance';
+import { Friend } from '@/atoms/friendsListAtom';
 
 export const getEmailCode = (email: string) => {
   return get('/getCode', { email });
@@ -25,4 +26,8 @@ export const queryUser = (k: string) => {
 };
 export const addFriendToList = (id: string, v: string) => {
   return get('/addUser', { id, note: v });
+};
+
+export const queryFriendList = () => {
+  return get<{ friends: Friend[] }>('/friends');
 };
