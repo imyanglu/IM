@@ -1,7 +1,9 @@
 import { addFriendToList } from '@/api';
 import { Header } from '@/components';
+import { MeContext } from '@/Contexts/MeContext';
+import { addFriendRequest } from '@/database/models/friend';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Pressable, TextInput, View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
@@ -10,11 +12,13 @@ const Page = () => {
   const { top } = useSafeAreaInsets();
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const [me] = useContext(MeContext);
   const [value, setValue] = useState('');
   const addFriend = async () => {
     if (!id) return;
     try {
       await addFriendToList(id, value);
+      await addFriendRequest({ senderId: me.id, receiverId: id, reason: value });
       Toast.show({ type: 'success', text1: '发送好友请求成功.' });
     } catch (err) {
       Toast.show({ type: 'error', text1: '添加失败,请稍后再试.' });

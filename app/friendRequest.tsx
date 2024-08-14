@@ -2,12 +2,27 @@ import { Header, PageBg } from '@/components';
 import { Stack, useRouter } from 'expo-router';
 import { Pressable, View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useContext, useEffect, useState } from 'react';
+import { getFriendRequests } from '@/database/models/friend';
+import { MeContext } from '@/Contexts/MeContext';
+import { FlashList } from '@shopify/flash-list';
+import { FriendRequestSchema } from '@/database/init';
+import RequestItem from '@/components/RequestItem';
 
 const Page = () => {
+  const [me] = useContext(MeContext);
   const { top } = useSafeAreaInsets();
   const router = useRouter();
+  const [requests, setRequests] = useState<FriendRequestSchema[]>([]);
+  const initRequests = async () => {
+    const requests = await getFriendRequests(me.id);
+    setRequests(requests);
+  };
+  useEffect(() => {
+    initRequests();
+  }, []);
+
   return (
     <View className="flex-1" style={{ paddingTop: top }}>
       <PageBg />
@@ -27,6 +42,13 @@ const Page = () => {
           <Text className="text-center  text-[#9d9a9a] ml-[6px]">邮箱/用户名</Text>
         </View>
       </Pressable>
+      <FlashList
+        estimatedItemSize={80}
+        data={requests}
+        renderItem={({ item }) => {
+          return <RequestItem {...item} />;
+        }}
+      />
     </View>
   );
 };

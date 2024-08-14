@@ -25,7 +25,6 @@ export const pySegSort = <K extends unknown>(arr: K[], sortKey: (k: K) => string
       letter: string;
       data: K[];
     } = { letter: c, data: [] };
-
     arr.forEach((item) => {
       const firstC = sortKey(item)[0];
       if (isChinese.test(firstC)) {
@@ -54,4 +53,8 @@ export const pySegSort = <K extends unknown>(arr: K[], sortKey: (k: K) => string
   });
 
   return segs;
+};
+
+export const queryUsers = (ids: string) => {
+  
 };

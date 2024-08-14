@@ -5,6 +5,7 @@ import { Storage } from '@/utils/storage';
 import { SplashScreen, useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
 import { ReactNode, useContext, useEffect } from 'react';
+import { createFriendRequestTable, createUserOverviewTable, db } from '@/database/init';
 
 const RootView = ({ children }: { children: ReactNode }) => {
   const [_, changeMe] = useContext(MeContext);
@@ -14,6 +15,15 @@ const RootView = ({ children }: { children: ReactNode }) => {
     const data = await queryFriendList();
     setFriends(data.friends);
   };
+
+  const initTables = () => {
+    createFriendRequestTable();
+    createUserOverviewTable();
+    // db.runAsync('drop table friendsRequest').then((data) => {
+    //   console.log('删除表成功');
+    // });
+  };
+
   const initUser = async () => {
     try {
       const me = await Storage.get('me');
@@ -35,6 +45,7 @@ const RootView = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     initUser();
+    initTables();
   }, []);
 
   return <>{children}</>;

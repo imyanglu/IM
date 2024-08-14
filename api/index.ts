@@ -31,3 +31,7 @@ export const addFriendToList = (id: string, v: string) => {
 export const queryFriendList = () => {
   return get<{ friends: Friend[] }>('/friends');
 };
+
+export const getFriendRequest = () => {
+  return get<{ friends: Friend[] }>('/friends/request');
+};

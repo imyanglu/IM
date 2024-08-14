@@ -18,6 +18,7 @@ const SystemChat = [
     renderItem: () => {
       return (
         <Pressable
+          key="newFriend"
           onPress={() => {
             router.push('/friendRequest');
           }}
@@ -38,7 +39,7 @@ const SystemChat = [
     key: 'sse',
     renderItem: () => {
       return (
-        <Pressable className="px-[12px] bg-[#fff] flex-row h-[70px] items-center ">
+        <Pressable key={'see'} className="px-[12px] bg-[#fff] flex-row h-[70px] items-center ">
           <View className="w-[48px] bg-[#2A6BF2] justify-center items-center h-[48px] rounded-[4px]">
             <MaterialIcons name="announcement" size={22} color="#fff" />
           </View>
