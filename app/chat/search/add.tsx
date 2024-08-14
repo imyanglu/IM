@@ -8,6 +8,7 @@ import { useLast } from '@/hooks/useLast';
 import { useDebounce } from '@/hooks/useDebounce';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { queryUser } from '@/api';
+import { createUser } from '@/database/models/user';
 
 const { width, height } = Dimensions.get('window');
 
@@ -28,6 +29,7 @@ const Page = () => {
       const users = data.users;
       if (users.length === 1) {
         const user = users[0];
+        createUser(user);
         const src = value === user.email ? '邮箱搜索' : '昵称搜索';
         router.push({
           pathname: `/user/${user.id}`,

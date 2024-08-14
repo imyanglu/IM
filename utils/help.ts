@@ -56,5 +56,5 @@ export const pySegSort = <K extends unknown>(arr: K[], sortKey: (k: K) => string
 };
 
 export const queryUsers = (ids: string) => {
-  
+    
 };

@@ -36,7 +36,7 @@ const Page = () => {
         onPress={() => {
           router.push('/chat/search/add');
         }}
-        className="flex-row w-full items-center px-[12px] mt-[12px]">
+        className=" flex-row w-full items-center px-[12px] mt-[12px] mb-[24px]">
         <View className="bg-[#fff] flex-1 py-[6px] rounded-[4px] flex-row justify-center items-center">
           <AntDesign name="search1" size={16} color="#9d9a9a" />
           <Text className="text-center  text-[#9d9a9a] ml-[6px]">邮箱/用户名</Text>

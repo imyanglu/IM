@@ -1,4 +1,4 @@
-import { User } from '@/type';
+import { User, UserOverview } from '@/type';
 import { get, post } from './instance';
 import { Friend } from '@/atoms/friendsListAtom';
 
@@ -32,6 +32,6 @@ export const queryFriendList = () => {
   return get<{ friends: Friend[] }>('/friends');
 };
 
-export const getFriendRequest = () => {
-  return get<{ friends: Friend[] }>('/friends/request');
+export const getNewFriendReq = () => {
+  return get<{ users: UserOverview[] }>('/friendRequests');
 };

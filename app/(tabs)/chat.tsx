@@ -89,13 +89,11 @@ const Chat = () => {
         sections={processList ?? []}
         renderItem={renderItem}
         renderSectionHeader={({ section: { letter } }) => {
-          if (letter)
-            return (
-              <View className="bg-[#EDEDED] px-[12px] py-[4px]">
-                <Text>{letter}</Text>
-              </View>
-            );
-          return <></>;
+          return (
+            <View className="bg-[#EDEDED] px-[12px] py-[4px]">
+              <Text>{letter}</Text>
+            </View>
+          );
         }}
       />
     </View>
