@@ -2,19 +2,23 @@ import { PageBg } from '@/components';
 import { MeContext } from '@/Contexts/MeContext';
 import { Image } from 'expo-image';
 import { useContext } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, ScrollView, Text, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import Entypo from '@expo/vector-icons/Entypo';
 
 const Profile = () => {
   const [me] = useContext(MeContext);
   const { top } = useSafeAreaInsets();
   return (
-    <View className="flex-1 bg-[#fff]  relative" style={{ paddingTop: top }}>
+    <ScrollView
+      className="bg-[#fff] flex-1 relative"
+      style={{ paddingTop: top }}
+      contentContainerStyle={{ minHeight: '100%' }}>
       <PageBg />
-      <View className="pt-[40px] pb-[30px] flex-row px-[16px]">
+      <View className="pt-[40px] pb-[30px] flex-row px-[16px] bg-[#fff]">
         {me.avatar && (
           <Image
             source={{ uri: me.avatar }}
@@ -35,6 +39,10 @@ const Profile = () => {
         </View>
       </View>
       <View className="bg-[#EDEDED] h-[12px]" />
+      <View className="h-[80px] justify-center items-center py-[2px] px-[16px]">
+        <Text>{me.bio || '这个人很懒什么都没留下.'}</Text>
+      </View>
+      <View className="bg-[#EDEDED] h-[12px]" />
       <View className="h-[65px] flex-row bg-white items-center px-[16px]">
         <MaterialCommunityIcons name="van-utility" size={30} color="#24C873" />
         <Text className="ml-[16px] text-[17px]">工具箱</Text>
@@ -42,7 +50,7 @@ const Profile = () => {
           <AntDesign name="right" size={16} color="#858383" />
         </Pressable>
       </View>
-      <View className="bg-[#EDEDED] h-[12px]" />
+      <View className=" bg-[#ededed] h-[1px]  relative"></View>
       <View className="h-[65px] flex-row bg-white items-center px-[16px]">
         <AntDesign name="setting" size={24} color="#98C9F7" />
         <Text className="ml-[16px] text-[17px]">设置</Text>
@@ -50,9 +58,13 @@ const Profile = () => {
           <AntDesign name="right" size={16} color="#858383" />
         </Pressable>
       </View>
+      <View className=" bg-[#ededed] h-[20px]  relative"></View>
+      <View className="h-[65px] justify-center flex-row  bg-white items-center px-[16px]">
+        <Text className="ml-[16px] text-[17px] font-bold">退出登录</Text>
+      </View>
 
-      <View className="bg-[#EDEDED] flex-1" />
-    </View>
+      <View className="flex-1 bg-[#ededed]" />
+    </ScrollView>
   );
 };
 export default Profile;
