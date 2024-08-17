@@ -33,5 +33,5 @@ export const queryFriendList = () => {
 };
 
 export const getNewFriendReq = () => {
-  return get<{ users: UserOverview[] }>('/friendRequests');
+  return get<{ users: Array<UserOverview & { email: string }> }>('/friendRequests');
 };

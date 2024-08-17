@@ -21,9 +21,7 @@ export const createFriendRequestTable = () => {
     date text,
     reason text
      )`
-  ).then(() => {
-    console.log('创建好友请求表成功');
-  });
+  );
 };
 
 export type UserOverviewSchema = Record<'id' | 'email' | 'avatar' | 'nickname' | 'bio', string>;
@@ -35,7 +33,5 @@ export const createUserOverviewTable = () => {
     bio varchar(256),
     email varchar(64)
      )`
-  ).then(() => {
-    console.log('创建用户概览表成功');
-  });
+  );
 };

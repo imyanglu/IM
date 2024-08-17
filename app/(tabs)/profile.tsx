@@ -2,7 +2,7 @@ import { PageBg } from '@/components';
 import { MeContext } from '@/Contexts/MeContext';
 import { Image } from 'expo-image';
 import { useContext } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Profile = () => {
@@ -18,6 +18,7 @@ const Profile = () => {
             className="w-[80px] h-[80px] rounded-[40px] bg-slate-400"
           />
         )}
+        <Text>{me.nickname}</Text>
       </View>
     </View>
   );

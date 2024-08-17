@@ -7,6 +7,7 @@ import { useAtom } from 'jotai';
 import { ReactNode, useContext, useEffect } from 'react';
 import { createFriendRequestTable, createUserOverviewTable, db } from '@/database/init';
 import { addFriendRequest } from '@/database/models/friend';
+import { createUsers } from '@/database/models/user';
 
 const RootView = ({ children }: { children: ReactNode }) => {
   const [_, changeMe] = useContext(MeContext);
@@ -30,7 +31,8 @@ const RootView = ({ children }: { children: ReactNode }) => {
   const initFriendRequests = async () => {
     const result = await getNewFriendReq();
     const users = result.users;
-    
+
+    createUsers(users);
     // addFriendRequest()
   };
 
@@ -47,6 +49,7 @@ const RootView = ({ children }: { children: ReactNode }) => {
       Storage.save('me', data.user);
       changeMe(data.user);
     } catch (err) {
+      console.log(err, 'eee');
     } finally {
       SplashScreen.hideAsync(); // 隐藏启动屏
     }

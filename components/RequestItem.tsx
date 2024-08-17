@@ -18,7 +18,8 @@ const RequestItem = ({ senderId, receiverId }: FriendRequestSchema) => {
     queryUser();
   }, [receiverId, senderId]);
 
-  if (!user) return <></>;
+  console.log(user, 'dd', me.nickname);
+  if (!user) return <Text>{}---</Text>;
   return (
     <Pressable className="px-[12px] bg-[#fff] flex-row h-[70px] items-center ">
       <View>

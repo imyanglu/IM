@@ -19,6 +19,7 @@ const Page = () => {
     const requests = await getFriendRequests(me.id);
     setRequests(requests);
   };
+  console.log(requests, 'rrr');
   useEffect(() => {
     initRequests();
   }, []);
