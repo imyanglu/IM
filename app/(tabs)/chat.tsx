@@ -60,7 +60,6 @@ const Chat = () => {
   const processList = useMemo(() => {
     return pySegSort(friends, (i) => i.nickname) ?? [];
   }, [friends]);
-  console.log(processList);
 
   const renderItem = useCallback(
     ({ item }: { item: Friend }) => {

@@ -7,17 +7,23 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Entypo from '@expo/vector-icons/Entypo';
+import { Storage } from '@/utils/storage';
+import { useRouter } from 'expo-router';
 
 const Profile = () => {
   const [me] = useContext(MeContext);
+  const router = useRouter();
   const { top } = useSafeAreaInsets();
+  const logOut = () => {
+    Storage.remove('me');
+    router.replace('/login');
+  };
+
   return (
     <ScrollView
       className="bg-[#fff] flex-1 relative"
       style={{ paddingTop: top }}
       contentContainerStyle={{ minHeight: '100%' }}>
-      <PageBg />
       <View className="pt-[40px] pb-[30px] flex-row px-[16px] bg-[#fff]">
         {me.avatar && (
           <Image
@@ -30,7 +36,10 @@ const Profile = () => {
           <Text className="text-[13px] text-[#858383]">邮箱:{me.email}</Text>
         </View>
         <View className=" flex-row items-end justify-end">
-          <Pressable>
+          <Pressable
+            onPress={() => {
+              router.push('/qrcode');
+            }}>
             <Ionicons name="qr-code-sharp" size={16} color="#858383" />
           </Pressable>
           <Pressable className="ml-[20px]">
@@ -60,9 +69,10 @@ const Profile = () => {
       </View>
       <View className=" bg-[#ededed] h-[20px]  relative"></View>
       <View className="h-[65px] justify-center flex-row  bg-white items-center px-[16px]">
-        <Text className="ml-[16px] text-[17px] font-bold">退出登录</Text>
+        <Text onPress={logOut} className="ml-[16px] text-[17px] font-bold">
+          退出登录
+        </Text>
       </View>
-
       <View className="flex-1 bg-[#ededed]" />
     </ScrollView>
   );

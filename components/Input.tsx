@@ -25,7 +25,7 @@ const Input = ({
     <Pressable
       className={`relative pt-[22px] pb-[2px] px-[12px]  border-[1px] border-[#ccc] rounded-[12px] ${containerClassName}`}
       onLayout={({ nativeEvent: { layout } }) => {
-        if (!containerSize) setContainerSize({ w: layout.width, h: layout.height });
+        setContainerSize({ w: layout.width, h: layout.height });
       }}
       onPress={() => {
         console.log('hello world');
@@ -52,7 +52,6 @@ const Input = ({
         value={value}
         onChangeText={onChangeText}
         onFocus={() => {
-          console.log('hhh');
           if (!containerSize || !labelSize) return;
           const w = (containerSize?.w ?? 0) / 2 - (labelSize?.w ?? 0) / 2 - 4;
           const h = containerSize.h / 2 - labelSize.h / 2;

@@ -1,11 +1,18 @@
 import { MeContext } from '@/Contexts/MeContext';
 import { FriendRequestSchema, UserOverviewSchema } from '@/database/init';
 import { getUser } from '@/database/models/user';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Pressable, View, Text } from 'react-native';
 import { Image } from 'expo-image';
 
-const RequestItem = ({ senderId, receiverId }: FriendRequestSchema) => {
+import { useLast } from '@/hooks/useLast';
+
+const RequestItem = ({
+  senderId,
+  receiverId,
+  status,
+  addFriend,
+}: FriendRequestSchema & { addFriend: (id: string) => void }) => {
   const [me] = useContext(MeContext);
   const [user, setUser] = useState<UserOverviewSchema>();
   const sendByMe = me.id === senderId;
@@ -14,12 +21,31 @@ const RequestItem = ({ senderId, receiverId }: FriendRequestSchema) => {
     const user = await getUser(desId);
     if (user) setUser(user);
   };
+  const addFriendRef = useLast(addFriend);
+
+  const funBtn = useMemo(() => {
+    const sendByMe = me.id === senderId;
+    console.log(sendByMe);
+    if (status === '0') {
+      if (sendByMe) return <Text className="text-[#a5a4a4]">等待验证</Text>;
+      return (
+        <Pressable
+          onPress={() => {
+            addFriendRef.current(receiverId);
+          }}
+          className="bg-[#0ECA74] px-[12px] py-[8px] rounded-md">
+          <Text className="text-[#fff]">添加</Text>
+        </Pressable>
+      );
+    }
+    return <Text className="text-[#a5a4a4]">已添加</Text>;
+  }, [me, senderId, addFriendRef, status]);
+
   useEffect(() => {
     queryUser();
   }, [receiverId, senderId]);
 
-  console.log(user, 'dd', me.nickname);
-  if (!user) return <Text>{}---</Text>;
+  if (!user) return <></>;
   return (
     <Pressable className="px-[12px] bg-[#fff] flex-row h-[70px] items-center ">
       <View>
@@ -30,15 +56,7 @@ const RequestItem = ({ senderId, receiverId }: FriendRequestSchema) => {
           {user?.nickname}
         </Text>
       </View>
-      <View className="w-fit">
-        {sendByMe ? (
-          <Text className="text-[#a5a4a4]">等待验证</Text>
-        ) : (
-          <Pressable className="bg-[#0ECA74] px-[12px] py-[8px] rounded-md">
-            <Text className="text-[#fff]">添加</Text>
-          </Pressable>
-        )}
-      </View>
+      <View className="w-fit">{funBtn}</View>
     </Pressable>
   );
 };

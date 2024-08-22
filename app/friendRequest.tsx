@@ -4,11 +4,13 @@ import { Pressable, View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useContext, useEffect, useState } from 'react';
-import { getFriendRequests } from '@/database/models/friend';
+import { getFriendRequests, updateFriendRequestStatus } from '@/database/models/friend';
 import { MeContext } from '@/Contexts/MeContext';
 import { FlashList } from '@shopify/flash-list';
 import { FriendRequestSchema } from '@/database/init';
 import RequestItem from '@/components/RequestItem';
+import { acceptFriendReq } from '@/api';
+import Toast from 'react-native-toast-message';
 
 const Page = () => {
   const [me] = useContext(MeContext);
@@ -19,7 +21,24 @@ const Page = () => {
     const requests = await getFriendRequests(me.id);
     setRequests(requests);
   };
-  console.log(requests, 'rrr');
+  const addFriend = async (id: string) => {
+    try {
+      await acceptFriendReq(id);
+      setRequests((r) =>
+        r.map((item) => {
+          if (item.receiverId === id) {
+            console.log(item);
+            return { ...item, status: '1' };
+          }
+          return item;
+        })
+      );
+      updateFriendRequestStatus([{ sId: id, rId: me.id, status: '1' }]);
+    } catch (err) {
+      Toast.show({ type: 'error', text1: '添加失败' });
+    }
+  };
+  console.log(requests);
   useEffect(() => {
     initRequests();
   }, []);
@@ -44,10 +63,11 @@ const Page = () => {
         </View>
       </Pressable>
       <FlashList
+        extraData={[requests]}
         estimatedItemSize={80}
         data={requests}
         renderItem={({ item }) => {
-          return <RequestItem {...item} />;
+          return <RequestItem {...item} addFriend={addFriend} />;
         }}
       />
     </View>

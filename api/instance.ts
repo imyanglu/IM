@@ -10,7 +10,7 @@ export class ApiError {
     this.message = message;
   }
 }
-const ServerUri = 'http://192.168.103.33:4001';
+const ServerUri = 'http://192.168.1.103:4001';
 async function fetchMethod<T>({
   banConvert,
   url,

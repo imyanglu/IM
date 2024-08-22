@@ -4,13 +4,15 @@ import { MeContext } from '@/Contexts/MeContext';
 import { Storage } from '@/utils/storage';
 import { SplashScreen, useRouter } from 'expo-router';
 import { useAtom } from 'jotai';
-import { ReactNode, useContext, useEffect } from 'react';
+import { ReactNode, useContext, useEffect, useState } from 'react';
 import { createFriendRequestTable, createUserOverviewTable, db } from '@/database/init';
-import { addFriendRequest } from '@/database/models/friend';
+
 import { createUsers } from '@/database/models/user';
+import { addFriendRequest } from '@/database/models/friend';
 
 const RootView = ({ children }: { children: ReactNode }) => {
-  const [_, changeMe] = useContext(MeContext);
+  const [me, changeMe] = useContext(MeContext);
+  const [loaded, setLoaded] = useState(false);
   const router = useRouter();
   const [friends, setFriends] = useAtom(FriendListAtom);
   const initFriends = async () => {
@@ -28,24 +30,33 @@ const RootView = ({ children }: { children: ReactNode }) => {
     // });
   };
 
-  const initFriendRequests = async () => {
+  const initFriendRequests = async (meId: string) => {
     const result = await getNewFriendReq();
-    const users = result.users;
 
+    const users = result.users;
     createUsers(users);
-    // addFriendRequest()
+    addFriendRequest(
+      users.map((item) => ({
+        senderId: item.id,
+        receiverId: meId,
+        reason: item.reason,
+        status: item.status,
+      }))
+    );
   };
 
   const initUser = async () => {
     try {
       const me = await Storage.get('me');
       if (!me) {
+        setLoaded(true);
         return router.replace('/login');
       }
       changeMe(me);
+      setLoaded(true);
       const data = await getMe();
       initFriends();
-      initFriendRequests();
+      initFriendRequests(data.user.id);
       Storage.save('me', data.user);
       changeMe(data.user);
     } catch (err) {
@@ -59,7 +70,7 @@ const RootView = ({ children }: { children: ReactNode }) => {
     initUser();
     initTables();
   }, []);
-
+  if (!loaded) return <></>;
   return <>{children}</>;
 };
 export default RootView;

@@ -18,7 +18,7 @@ const Page = () => {
     if (!id) return;
     try {
       await addFriendToList(id, value);
-      await addFriendRequest({ senderId: me.id, receiverId: id, reason: value });
+      await addFriendRequest([{ senderId: me.id, receiverId: id, reason: value }]);
       Toast.show({ type: 'success', text1: '发送好友请求成功.' });
     } catch (err) {
       Toast.show({ type: 'error', text1: '添加失败,请稍后再试.' });

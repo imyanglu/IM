@@ -30,7 +30,8 @@ const Login = () => {
       return;
     }
     try {
-      await getEmailCode(email);
+      const data = await getEmailCode(email);
+
       setIsTimeDown(true);
       Toast.show({ type: 'info', text1: '📮验证码已发送!' });
     } catch (e) {
@@ -59,7 +60,6 @@ const Login = () => {
       changeMe(me);
       router.replace('/');
     } catch (e) {
-      console.log(e);
       if (e instanceof ApiError) {
         Toast.show({
           type: 'error',

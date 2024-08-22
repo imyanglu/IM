@@ -1,4 +1,3 @@
-import { UserOverview } from '@/type';
 import * as SqlLite from 'expo-sqlite';
 
 export const db = SqlLite.openDatabaseSync('database.db');
@@ -14,14 +13,17 @@ export type FriendRequestSchema = {
 
 export const createFriendRequestTable = () => {
   db.execAsync(
-    `create table if not exists friendsRequest(id integer primary key autoincrement, 
-    senderId varchar(32), 
+    `create table if not exists friendsRequest(
+    senderId varchar(32) primary key, 
     receiverId varchar(32),
     status text,
     date text,
     reason text
+ 
      )`
-  );
+  ).catch((err) => {
+    console.log(err);
+  });
 };
 
 export type UserOverviewSchema = Record<'id' | 'email' | 'avatar' | 'nickname' | 'bio', string>;
