@@ -1,5 +1,6 @@
 import { getItemAsync, setItemAsync } from 'expo-secure-store';
 import { nanoid } from 'nanoid/non-secure';
+import { writeAsStringAsync, EncodingType } from 'expo-file-system';
 
 export const getId = async () => {
   const id = await getItemAsync('id');
@@ -7,6 +8,15 @@ export const getId = async () => {
   const clientId = nanoid();
   await setItemAsync('id', clientId);
   return clientId;
+};
+export const base64ToFile = async ({ base64, uri }: { base64: string; uri: string }) => {
+  return writeAsStringAsync(uri, base64, {
+    encoding: EncodingType.Base64,
+  });
+};
+
+export const saveImg = (uri: string) => {
+  return new Promise((resolve, reject) => {});
 };
 
 export const pySegSort = <K extends unknown>(arr: K[], sortKey: (k: K) => string) => {
@@ -55,6 +65,4 @@ export const pySegSort = <K extends unknown>(arr: K[], sortKey: (k: K) => string
   return segs;
 };
 
-export const queryUsers = (ids: string) => {
-    
-};
+export const queryUsers = (ids: string) => {};
